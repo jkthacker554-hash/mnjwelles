@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M N Jewelers — Diamond City Surat</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --ivory: #FAF6EE;
+    --cream: #F2EBD9;
+    --deep: #0D0A06;
+    --charcoal: #1A1510;
+    --warm-gray: #7A6E60;
+    --white: #FFFFFF;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--ivory);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(13,10,6,0.92);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-logo span { font-weight: 400; color: var(--ivory); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ivory);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s, color 0.3s;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    padding: 10px 24px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--deep); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #0D0A06 0%, #1A1208 50%, #0D0A06 100%);
+  }
+  .hero-geometric {
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px;
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 50%;
+    animation: slowRotate 30s linear infinite;
+  }
+  .hero-geometric::before {
+    content: '';
+    position: absolute; inset: 60px;
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 50%;
+  }
+  .hero-geometric::after {
+    content: '';
+    position: absolute; inset: 120px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+  }
+  .diamond-icon {
+    position: absolute;
+    right: 200px; top: 50%;
+    transform: translateY(-50%);
+    width: 200px; height: 200px;
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+  }
+  .diamond-icon svg { width: 100%; height: 100%; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 60px;
+    max-width: 700px;
+    animation: fadeUp 1.2s ease forwards;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s ease forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--ivory);
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s ease forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--warm-gray);
+    margin-bottom: 48px;
+    line-height: 1.7;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s ease forwards;
+    max-width: 480px;
+  }
+  .hero-actions {
+    display: flex; gap: 20px; align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s ease forwards;
+  }
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 16px 40px;
+    background: var(--gold);
+    color: var(--deep);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.3);
+  }
+  .btn-outline {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 16px 40px;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: border-color 0.3s, background 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+  .hero-rating {
+    position: absolute;
+    bottom: 50px; right: 60px;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s ease forwards;
+  }
+  .rating-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .rating-stars { color: var(--gold); font-size: 14px; letter-spacing: 4px; margin: 6px 0; }
+  .rating-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 50px; left: 60px;
+    display: flex; align-items: center; gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s 1.3s ease forwards;
+  }
+  .scroll-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+    animation: expandLine 2s 1.5s ease forwards;
+    transform-origin: left;
+  }
+  .scroll-text {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    padding: 20px 0;
+    background: var(--gold);
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--deep);
+    text-transform: uppercase;
+    padding: 0 40px;
+    flex-shrink: 0;
+  }
+  .marquee-dot { opacity: 0.4; }
+
+  /* ABOUT SECTION */
+  .section { padding: 120px 60px; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ivory);
+    margin-bottom: 28px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--warm-gray);
+    margin-bottom: 20px;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 40px;
+    width: 80px; height: 2px;
+    background: var(--gold);
+  }
+  .about-card::after {
+    content: '"';
+    position: absolute;
+    top: 30px; right: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--ivory);
+    position: relative; z-index: 1;
+  }
+  .about-quote-attr {
+    margin-top: 24px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .stats-row {
+    display: flex; gap: 0;
+    margin-top: 60px;
+    border: 1px solid rgba(201,168,76,0.12);
+  }
+  .stat {
+    flex: 1; padding: 30px;
+    text-align: center;
+    border-right: 1px solid rgba(201,168,76,0.12);
+    transition: background 0.3s;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(201,168,76,0.04); }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+  }
+
+  /* COLLECTIONS */
+  .collections { background: var(--charcoal); }
+  .collections-header {
+    text-align: center;
+    margin-bottom: 70px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 70px;
+  }
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .collection-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    cursor: none;
+    background: var(--deep);
+  }
+  .collection-card:first-child {
+    grid-row: span 2;
+    aspect-ratio: unset;
+  }
+  .collection-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.8s ease;
+  }
+  .collection-card:hover .collection-bg { transform: scale(1.06); }
+  .c1 { background: linear-gradient(135deg, #1A0F00 0%, #2D1F00 40%, #1A1000 100%); }
+  .c2 { background: linear-gradient(135deg, #0A0A1A 0%, #0F0F2A 40%, #080812 100%); }
+  .c3 { background: linear-gradient(135deg, #0D1A0D 0%, #162A10 40%, #0A130A 100%); }
+  .c4 { background: linear-gradient(135deg, #1A0A0A 0%, #2A0F0F 40%, #130707 100%); }
+  .c5 { background: linear-gradient(135deg, #150D1A 0%, #200F2A 40%, #100812 100%); }
+
+  .collection-pattern {
+    position: absolute; inset: 0;
+    opacity: 0.15;
+  }
+  .collection-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  }
+  .collection-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 32px;
+    transform: translateY(10px);
+    transition: transform 0.4s ease;
+  }
+  .collection-card:hover .collection-info { transform: translateY(0); }
+  .collection-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .collection-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .collection-link {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0;
+    transition: opacity 0.4s 0.1s;
+  }
+  .collection-card:hover .collection-link { opacity: 1; }
+  .collection-link::after {
+    content: '→';
+    transition: transform 0.3s;
+  }
+  .collection-card:hover .collection-link::after { transform: translateX(4px); }
+
+  /* Jewel SVG patterns */
+  .jewel-svg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.2;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 120px 60px;
+    background: var(--deep);
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    max-width: 1200px;
+    margin: 60px auto 0;
+  }
+  .feature-item {
+    padding: 50px 36px;
+    background: rgba(201,168,76,0.02);
+    border: 1px solid rgba(201,168,76,0.08);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-item::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.5s ease;
+  }
+  .feature-item:hover { border-color: rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); transform: translateY(-4px); }
+  .feature-item:hover::before { width: 100%; }
+  .feature-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 28px;
+    color: var(--gold);
+  }
+  .feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 12px;
+  }
+  .feature-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--warm-gray);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--charcoal);
+    padding: 120px 60px;
+  }
+  .testimonials-header { text-align: center; margin-bottom: 70px; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .testimonial-card {
+    padding: 44px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .testimonial-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+  .testimonial-card::before {
+    content: '❝';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--ivory);
+    margin-bottom: 28px;
+  }
+  .testimonial-stars { color: var(--gold); font-size: 12px; letter-spacing: 3px; margin-bottom: 12px; }
+  .testimonial-author {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 160px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .cta-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border: 1px solid rgba(201,168,76,0.06);
+    border-radius: 50%;
+    animation: slowRotate 40s linear infinite;
+  }
+  .cta-ring::before {
+    content: '';
+    position: absolute; inset: 80px;
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 50%;
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-pre {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-sub {
+    font-size: 15px;
+    color: var(--warm-gray);
+    margin-bottom: 50px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--charcoal);
+    padding: 80px 60px;
+  }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .contact-brand .nav-logo { font-size: 24px; display: block; margin-bottom: 16px; }
+  .contact-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--warm-gray);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .contact-social { display: flex; gap: 12px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); text-decoration: none; font-size: 12px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .social-btn:hover { background: var(--gold); color: var(--deep); border-color: var(--gold); }
+  .contact-col-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .contact-detail-icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .contact-detail-text { font-size: 13px; line-height: 1.7; color: var(--warm-gray); }
+  .contact-detail-text strong { color: var(--ivory); display: block; margin-bottom: 2px; }
+  .contact-hours { list-style: none; }
+  .contact-hours li {
+    display: flex; justify-content: space-between;
+    font-size: 13px;
+    color: var(--warm-gray);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .contact-hours li span { color: var(--ivory); }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+  .footer-copy {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(201,168,76,0.4);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slowRotate {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) translateY(0px); }
+    50% { transform: translateY(-50%) translateY(-20px); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes expandLine {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hero-content { padding: 0 24px; }
+    .hero-geometric { display: none; }
+    .hero-rating { right: 24px; bottom: 30px; }
+    .section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 50px; }
+    .collection-grid { grid-template-columns: 1fr 1fr; }
+    .collection-card:first-child { grid-column: span 2; grid-row: span 1; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .scroll-hint { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .cta-section { padding: 100px 24px; }
+    .cta-ring { width: 300px; height: 300px; }
+    .features { padding: 80px 24px; }
+    .testimonials { padding: 80px 24px; }
+    .contact-section { padding: 60px 24px; }
+    .stats-row { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.12); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">M<span>&</span>N <span style="font-size:14px;letter-spacing:2px;font-weight:300">Jewelers</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Heritage</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#features">Why Us</a></li>
+    <li><a href="#contact">Visit</a></li>
+  </ul>
+  <a href="tel:09925298837" class="nav-cta">Call Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-geometric"></div>
+  <div class="diamond-icon">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="100,10 190,80 100,190 10,80" stroke="#C9A84C" stroke-width="1" fill="rgba(201,168,76,0.05)"/>
+      <polygon points="100,10 190,80 100,110 10,80" stroke="#C9A84C" stroke-width="0.5" fill="rgba(201,168,76,0.08)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#C9A84C" stroke-width="0.3" opacity="0.5"/>
+      <line x1="10" y1="80" x2="190" y2="80" stroke="#C9A84C" stroke-width="0.3" opacity="0.5"/>
+      <line x1="145" y1="45" x2="100" y2="110" stroke="#C9A84C" stroke-width="0.3" opacity="0.4"/>
+      <line x1="55" y1="45" x2="100" y2="110" stroke="#C9A84C" stroke-width="0.3" opacity="0.4"/>
+      <circle cx="100" cy="100" r="95" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Diamond City · Surat, Gujarat</p>
+    <h1 class="hero-title">
+      Jewels of
+      <em>Tradition</em>
+    </h1>
+    <p class="hero-subtitle">Where rich Indian heritage meets exquisite craftsmanship. Southern Gujarat's most prestigious designer jewellery showroom — a legacy of trust, quality, and diversity.</p>
+    <div class="hero-actions">
+      <a href="#collections" class="btn-primary">Explore Collections</a>
+      <a href="#contact" class="btn-outline">Visit Our Store</a>
+    </div>
+  </div>
+
+  <div class="hero-rating">
+    <div class="rating-number">4.9</div>
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-label">Google Rating</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Trust <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Quality <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Diversity <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Tradition <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Elegance <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Heritage <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Craftsmanship <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Surat <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Trust <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Quality <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Diversity <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Tradition <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Elegance <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Heritage <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Craftsmanship <span class="marquee-dot">◆</span></span>
+    <span class="marquee-item">Surat <span class="marquee-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <p class="section-eyebrow">Our Heritage</p>
+      <h2 class="section-title">A Family Legacy Built on <em>Trust</em></h2>
+      <p class="section-text">M N Jewellers is one of the most prestigious exclusive designer jewellery showrooms in entire Southern Gujarat. For generations, we have been the custodians of rich Indian jewellery tradition — each piece a story of heritage and devotion.</p>
+      <p class="section-text">Located in the heart of Surat — the Diamond City — our jewellery mall has earned its reputation as an epitome of trust, quality, and diversity. We believe that with every jewel we sell, we earn a share of your trust.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-number">4.9★</div>
+          <div class="stat-label">Google Rating</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Collections</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Trust</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-card">
+        <p class="about-quote">"With every jewellery they sell, they buy a share of trust — this is not business, this is a bond."</p>
+        <p class="about-quote-attr">— M N Jewellers Philosophy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="section collections" id="collections">
+  <div class="collections-header reveal">
+    <p class="section-eyebrow" style="justify-content:center;margin-bottom:20px">
+      <span style="width:40px;height:1px;background:var(--gold);display:inline-block;vertical-align:middle;margin-right:16px"></span>
+      Our Collections
+    </p>
+    <h2 class="section-title">Crafted for <em>Every Occasion</em></h2>
+    <p class="section-text" style="text-align:center">From bridal grandeur to everyday elegance — each piece tells a story of India's rich jewellery tradition.</p>
+  </div>
+
+  <div class="collection-grid reveal" style="padding:0 0px">
+    <div class="collection-card">
+      <div class="collection-bg c1">
+        <div class="jewel-svg">
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+            <polygon points="90,5 175,70 90,175 5,70" stroke="#C9A84C" stroke-width="1"/>
+            <polygon points="90,5 175,70 90,90 5,70" stroke="#C9A84C" stroke-width="0.5" fill="rgba(201,168,76,0.05)"/>
+            <line x1="5" y1="70" x2="175" y2="70" stroke="#C9A84C" stroke-width="0.5"/>
+            <line x1="90" y1="5" x2="90" y2="175" stroke="#C9A84C" stroke-width="0.5"/>
+            <circle cx="90" cy="90" r="85" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="4 8"/>
+          </svg>
+        </div>
+      </div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Signature</div>
+        <div class="collection-name">Bridal Jewellery</div>
+        <a href="#contact" class="collection-link">Explore Collection</a>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg c2">
+        <div class="jewel-svg">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <rect x="10" y="10" width="100" height="100" stroke="#C9A84C" stroke-width="0.8" transform="rotate(45 60 60)"/>
+            <rect x="25" y="25" width="70" height="70" stroke="#C9A84C" stroke-width="0.5" transform="rotate(45 60 60)"/>
+            <circle cx="60" cy="60" r="20" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.05)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Everyday</div>
+        <div class="collection-name">Gold Rings</div>
+        <a href="#contact" class="collection-link">Explore Collection</a>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg c3">
+        <div class="jewel-svg">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <ellipse cx="60" cy="60" rx="50" ry="50" stroke="#C9A84C" stroke-width="0.8"/>
+            <ellipse cx="60" cy="60" rx="35" ry="35" stroke="#C9A84C" stroke-width="0.5"/>
+            <path d="M60 10 L60 110 M10 60 L110 60 M25 25 L95 95 M95 25 L25 95" stroke="#C9A84C" stroke-width="0.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Luxury</div>
+        <div class="collection-name">Necklaces & Sets</div>
+        <a href="#contact" class="collection-link">Explore Collection</a>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg c4">
+        <div class="jewel-svg">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <polygon points="60,5 115,40 115,80 60,115 5,80 5,40" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.04)"/>
+            <circle cx="60" cy="60" r="25" stroke="#C9A84C" stroke-width="0.8"/>
+            <line x1="35" y1="60" x2="85" y2="60" stroke="#C9A84C" stroke-width="0.5"/>
+            <line x1="60" y1="35" x2="60" y2="85" stroke="#C9A84C" stroke-width="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Traditional</div>
+        <div class="collection-name">Bangles & Kadas</div>
+        <a href="#contact" class="collection-link">Explore Collection</a>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg c5">
+        <div class="jewel-svg">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <polygon points="60,10 110,85 10,85" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.04)"/>
+            <polygon points="60,110 110,35 10,35" stroke="#C9A84C" stroke-width="0.5" fill="rgba(201,168,76,0.03)"/>
+            <circle cx="60" cy="60" r="18" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.05)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Designer</div>
+        <div class="collection-name">Earrings & Jhumkas</div>
+        <a href="#contact" class="collection-link">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div style="text-align:center;margin-bottom:0;max-width:600px;margin:0 auto 60px" class="reveal">
+    <p class="section-eyebrow" style="justify-content:center">
+      <span style="width:40px;height:1px;background:var(--gold);display:inline-block;vertical-align:middle;margin-right:16px"></span>
+      Why M N Jewelers
+    </p>
+    <h2 class="section-title">The Pillars of Our <em>Promise</em></h2>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-item">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 4L28 16H41L31 24L35 36L24 28L13 36L17 24L7 16H20L24 4Z"/>
+      </svg>
+      <div class="feature-title">Unmatched Quality</div>
+      <p class="feature-text">Every piece is crafted with meticulous attention to detail, using only the finest metals and gemstones sourced from trusted suppliers.</p>
+    </div>
+    <div class="feature-item">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="24" cy="24" r="18"/>
+        <path d="M24 12V24L32 32"/>
+        <path d="M8 24H6M42 24H40M24 8V6M24 42V40"/>
+      </svg>
+      <div class="feature-title">Rich Selection</div>
+      <p class="feature-text">From traditional Indian designs to contemporary styles — our vast collection ensures you find the perfect jewel for every occasion.</p>
+    </div>
+    <div class="feature-item">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 4C24 4 8 12 8 24C8 32 16 40 24 44C32 40 40 32 40 24C40 12 24 4 24 4Z"/>
+        <path d="M16 24L22 30L32 18"/>
+      </svg>
+      <div class="feature-title">Trusted Legacy</div>
+      <p class="feature-text">Generations of families have trusted M N Jewellers with their most precious moments. Our reputation is built on honesty and integrity.</p>
+    </div>
+    <div class="feature-item">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 8C24 8 10 16 10 26C10 33 16 40 24 44C32 40 38 33 38 26C38 16 24 8 24 8Z"/>
+        <path d="M18 26L22 30L30 22"/>
+        <circle cx="24" cy="26" r="8"/>
+      </svg>
+      <div class="feature-title">Expert Guidance</div>
+      <p class="feature-text">Our knowledgeable team — including Divya Rana and many others — offers personalized service to help you find your perfect piece.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-header reveal">
+    <p class="section-eyebrow" style="justify-content:center">
+      <span style="width:40px;height:1px;background:var(--gold);display:inline-block;vertical-align:middle;margin-right:16px"></span>
+      Voices of Trust
+    </p>
+    <h2 class="section-title">What Our Customers <em>Say</em></h2>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Good service and best price. Staff member Divya Rana was incredibly helpful and made the experience truly special."</p>
+      <div class="testimonial-author">— Verified Google Review</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"One of the best jewellery shops in town for quality and variety. Every visit feels like discovering a new treasure."</p>
+      <div class="testimonial-author">— Verified Google Review</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Great customer service and a beautiful collection. The team goes above and beyond to ensure complete satisfaction."</p>
+      <div class="testimonial-author">— Verified Google Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-ring"></div>
+  <div class="cta-content reveal">
+    <p class="cta-pre">Begin Your Journey</p>
+    <h2 class="cta-title">Find Your <em>Perfect</em> Jewel</h2>
+    <p class="cta-sub">Visit us at Zampa Bazaar, Surat or call us to speak with our experts. We're open every day to help you find a piece that tells your story.</p>
+    <div class="cta-buttons">
+      <a href="tel:09925298837" class="btn-primary">Call Now: 099252 98837</a>
+      <a href="https://maps.google.com/?q=M+N+Jewelers+Surat" target="_blank" class="btn-outline">Get Directions</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <a href="#" class="nav-logo" style="font-family:'Cinzel',serif;font-size:20px;letter-spacing:3px;color:var(--gold);text-decoration:none;display:block;margin-bottom:16px">M<span style="color:var(--ivory)">&</span>N Jewelers</a>
+      <p class="contact-tagline">Carrying the part of rich Indian tradition in Jewellery — since our very inception.</p>
+      <div class="contact-social">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">W</a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-col-title">Find Us</div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">📍</span>
+        <div class="contact-detail-text">
+          <strong>Address</strong>
+          Shop No. 3, 335, Parsi Sheri, opposite Peoples Bank, Zampa Bazaar, Navapura, Bhagal, Surat, Gujarat 395003
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">📞</span>
+        <div class="contact-detail-text">
+          <strong>Phone</strong>
+          <a href="tel:09925298837" style="color:var(--gold);text-decoration:none">099252 98837</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">🌐</span>
+        <div class="contact-detail-text">
+          <strong>Website</strong>
+          <a href="http://m-n-jewelers-surat.business.site" target="_blank" style="color:var(--gold);text-decoration:none">m-n-jewelers-surat.business.site</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-col-title">Store Hours</div>
+      <ul class="contact-hours">
+        <li>Monday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Tuesday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Wednesday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Thursday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Friday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Saturday <span>10:00 AM – 9:30 PM</span></li>
+        <li>Sunday <span>10:00 AM – 9:30 PM</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 M N Jewelers, Surat, Gujarat</span>
+  <span class="footer-tagline">Trust · Quality · Diversity</span>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursorRing.style.left = rx + 'px';
+    cursorRing.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+      cursor.style.background = 'rgba(201,168,76,0.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      cursor.style.background = 'var(--gold)';
+    });
+  });
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        e.preventDefault();
+        document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
